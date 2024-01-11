@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Fingerbot Control</title>
+<style>
+        form {
+            margin-bottom: 20px; /* Adjust the margin as needed */
+        }
+</style>
+</head>
+<body>
+<h1>Fingerbot Control</h1>
+<form method="post" action="{{ url_for('single_press') }}">
+<button type="submit">Single Press</button>
+</form>
+<form method="post" action="{{ url_for('control') }}" style="margin-bottom: 20px;">
+<label for="delay_time">Delay Time (seconds):</label>
+<input type="number" step="0.1" name="delay_time" required>
+<button type="submit">Actuate Fingerbot</button>
+</form>
+</body>
+</html>
