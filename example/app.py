@@ -35,7 +35,7 @@ def pmanDoublePress():
     """
     d = json.loads(request.data)
     args = d['args']
-    delay_time = args[0]
+    delay_time = float(args[0])
     commands = {'commands': [{'code': 'switch', 'value': False}]}
 
     openapi.post('/v1.0/iot-03/devices/{}/commands'.format(DEVICE_ID), commands)
@@ -51,6 +51,7 @@ def pmanSinglePress():
     """
     commands = {'commands': [{'code': 'switch', 'value': True}]}
     openapi.post('/v1.0/iot-03/devices/{}/commands'.format(DEVICE_ID), commands)
+    time.sleep(2) #allow the button press to complete
     return {'status':'No Error', 'message':'Done'}
  
 @app.route('/control', methods=['POST'])
