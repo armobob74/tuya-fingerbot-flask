@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
+import json
 import time
 import logging
 from tuya_connector import TuyaOpenAPI, TUYA_LOGGER
@@ -22,6 +23,33 @@ DEVICE_ID = "eb0e50utng8gvk7o"
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/pman/control', methods=['POST'])
+def pmanControl():
+    """
+    Meant to be called by the Unified UI, or any PMAN runner.
+    args format: [delay_time]
+    Presses button, waits for delay_time sec, and presses button again.
+    """
+    d = json.loads(request.data)
+    args = d['args']
+    delay_time = args[0]
+    commands = {'commands': [{'code': 'switch', 'value': False}]}
+
+    openapi.post('/v1.0/iot-03/devices/{}/commands'.format(DEVICE_ID), commands)
+    time.sleep(delay_time)
+    openapi.post('/v1.0/iot-03/devices/{}/commands'.format(DEVICE_ID), commands)
+    return {'status':'No Error', 'message':'Done'}
+
+@app.route('/pman/single-press', methods=['POST'])
+def pmanSinglePress():
+    """
+    Meant to be called by the Unified UI, or any PMAN runner.
+    Presses button once
+    """
+    commands = {'commands': [{'code': 'switch', 'value': True}]}
+    openapi.post('/v1.0/iot-03/devices/{}/commands'.format(DEVICE_ID), commands)
+    return {'status':'No Error', 'message':'Done'}
  
 @app.route('/control', methods=['POST'])
 def control():
