@@ -1,10 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for
+from flask_cors import CORS
 import json
 import time
 import logging
 from tuya_connector import TuyaOpenAPI, TUYA_LOGGER
  
 app = Flask(__name__)
+CORS(app)
  
 ACCESS_ID = "qptp3ufv9gpuu9ehpfre"
 ACCESS_KEY = "43af19c2ff1f4762a725909adc84edaf"
