@@ -24,8 +24,8 @@ DEVICE_ID = "eb0e50utng8gvk7o"
 def index():
     return render_template('index.html')
 
-@app.route('/pman/control', methods=['POST'])
-def pmanControl():
+@app.route('/pman/double-press', methods=['POST'])
+def pmanDoublePress():
     """
     Meant to be called by the Unified UI, or any PMAN runner.
     args format: [delay_time]
